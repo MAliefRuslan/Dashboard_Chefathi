@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kantin Chefathi</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar / Header Area -->
+        <header class="dashboard-header">
+            <h1 class="logo">Dashboard Kantin Chefathi</h1>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="kategoryFilter">Kategori:</label>
+                    <select id="kategoryFilter">
+                        <option value="All">Semua Kategori</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="bulanFilter">Bulan:</label>
+                    <select id="bulanFilter">
+                        <option value="All">Semua Bulan</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-main">
+            <!-- KPI Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Total Pendapatan</p>
+                        <h2 class="kpi-value" id="kpiTotalSales">Rp 0</h2>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">📈</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Total Keuntungan</p>
+                        <h2 class="kpi-value" id="kpiTotalProfit">Rp 0</h2>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">📦</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Barang Terjual</p>
+                        <h2 class="kpi-value" id="kpiTotalQty">0</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container glassmorphism">
+                    <h3>Penjualan Berdasarkan Produk Teratas</h3>
+                    <div class="canvas-wrapper">
+                        <canvas id="productChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glassmorphism">
+                    <h3>Distribusi Keuntungan per Group</h3>
+                    <div class="canvas-wrapper">
+                        <canvas id="groupChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

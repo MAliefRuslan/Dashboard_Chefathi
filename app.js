@@ -66,6 +66,7 @@ function updateDashboard() {
     updateKPIs(filteredData);
     updateProductChart(filteredData);
     updateGroupChart(filteredData);
+    updateTopCategories(filteredData);
 }
 
 function updateKPIs(data) {
@@ -197,6 +198,67 @@ function updateGroupChart(data) {
             },
             cutout: '70%'
         }
+    });
+}
+
+function updateTopCategories(data) {
+    const container = document.getElementById('topCategoriesContainer');
+    container.innerHTML = '';
+    
+    // Group data by Kategory
+    const categoryGroups = {};
+    data.forEach(item => {
+        const cat = item.Kategory;
+        if (!cat) return; // Skip if no category
+        
+        if (!categoryGroups[cat]) categoryGroups[cat] = {};
+        
+        const prod = item.product || 'Unknown';
+        if (!categoryGroups[cat][prod]) categoryGroups[cat][prod] = 0;
+        
+        categoryGroups[cat][prod] += item['total sales amount'] || 0;
+    });
+    
+    // For each category, get top 10 products and render
+    Object.keys(categoryGroups).sort().forEach(cat => {
+        const products = categoryGroups[cat];
+        
+        const sortedProducts = Object.entries(products)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10);
+            
+        if (sortedProducts.length === 0) return;
+        
+        // Create Card Element
+        const card = document.createElement('div');
+        card.className = 'category-card glassmorphism';
+        
+        // Card Title
+        const title = document.createElement('h3');
+        title.textContent = `Kategori: ${cat}`;
+        card.appendChild(title);
+        
+        // List items
+        sortedProducts.forEach(prod => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'top-item';
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'item-name';
+            nameSpan.textContent = prod[0];
+            nameSpan.title = prod[0]; // for hover if truncated
+            
+            const valSpan = document.createElement('span');
+            valSpan.className = 'item-val';
+            valSpan.textContent = formatRupiah(prod[1]);
+            
+            itemDiv.appendChild(nameSpan);
+            itemDiv.appendChild(valSpan);
+            
+            card.appendChild(itemDiv);
+        });
+        
+        container.appendChild(card);
     });
 }
 

@@ -298,6 +298,10 @@ select:hover, select:focus {
     color: var(--success);
 }
 
+.revenue-val {
+    color: var(--accent-hover);
+}
+
 .no-data {
     text-align: center;
     color: var(--text-secondary);

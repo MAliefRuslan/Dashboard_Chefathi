@@ -66,6 +66,7 @@ function updateDashboard() {
     updateProductChart(filteredData);
     updateGroupChart(filteredData);
     updateCategoryProfitChart(filteredData);
+    updateCategoryRevenueList(filteredData);
     updateTopCategories(filteredData);
 }
 
@@ -314,6 +315,43 @@ function updateTopCategories(data) {
         });
         
         container.appendChild(card);
+    });
+}
+
+function updateCategoryRevenueList(data) {
+    const catRevenue = {};
+    data.forEach(item => {
+        const cat = item.Kategory || 'Unknown';
+        if (!catRevenue[cat]) catRevenue[cat] = 0;
+        catRevenue[cat] += item['total sales amount'] || 0;
+    });
+
+    // Sort by revenue descending
+    const sorted = Object.entries(catRevenue).sort((a, b) => b[1] - a[1]);
+
+    const container = document.getElementById('categoryRevenueList');
+    container.innerHTML = '';
+
+    if (sorted.length === 0) {
+        container.innerHTML = '<div class="no-data">Tidak ada data</div>';
+        return;
+    }
+
+    sorted.forEach(([catName, catValue]) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'profit-item';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'profit-cat';
+        nameSpan.textContent = catName;
+
+        const valSpan = document.createElement('span');
+        valSpan.className = 'profit-val revenue-val';
+        valSpan.textContent = formatRupiah(catValue);
+
+        itemDiv.appendChild(nameSpan);
+        itemDiv.appendChild(valSpan);
+        container.appendChild(itemDiv);
     });
 }
 

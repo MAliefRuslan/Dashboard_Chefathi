@@ -1,6 +1,7 @@
 // window.rawData is loaded from data.js
 let productChartInstance = null;
 let groupChartInstance = null;
+let categoryProfitChartInstance = null;
 
 // Format IDR currency
 const formatRupiah = (number) => {
@@ -66,6 +67,7 @@ function updateDashboard() {
     updateKPIs(filteredData);
     updateProductChart(filteredData);
     updateGroupChart(filteredData);
+    updateCategoryProfitChart(filteredData);
     updateTopCategories(filteredData);
 }
 
@@ -166,13 +168,80 @@ function updateGroupChart(data) {
     }
     
     groupChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Keuntungan (Rp)',
+                data: values,
+                borderColor: '#ec4899',
+                backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: '#ec4899',
+                pointRadius: 4,
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return formatRupiah(context.raw);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: {
+                        callback: function(value) {
+                            return 'Rp ' + (value / 1000000).toFixed(1) + 'M';
+                        }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: '#cbd5e1'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function updateCategoryProfitChart(data) {
+    const catProfits = {};
+    data.forEach(item => {
+        const cat = item.Kategory || 'Unknown';
+        if (!catProfits[cat]) catProfits[cat] = 0;
+        catProfits[cat] += item['profit'] || 0;
+    });
+    
+    const labels = Object.keys(catProfits);
+    const values = Object.values(catProfits);
+    
+    const ctx = document.getElementById('categoryProfitChart').getContext('2d');
+    
+    if (categoryProfitChartInstance) {
+        categoryProfitChartInstance.destroy();
+    }
+    
+    categoryProfitChartInstance = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
                 data: values,
                 backgroundColor: [
-                    '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#f59e0b', '#10b981', '#06b6d4'
+                    '#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#06b6d4'
                 ],
                 borderWidth: 0,
                 hoverOffset: 4

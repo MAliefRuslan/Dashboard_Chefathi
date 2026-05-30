@@ -1,7 +1,7 @@
 // window.rawData is loaded from data.js
 let productChartInstance = null;
+let productChartInstance = null;
 let groupChartInstance = null;
-let categoryProfitChartInstance = null;
 
 // Format IDR currency
 const formatRupiah = (number) => {
@@ -225,48 +225,36 @@ function updateCategoryProfitChart(data) {
         catProfits[cat] += item['profit'] || 0;
     });
     
-    const labels = Object.keys(catProfits);
-    const values = Object.values(catProfits);
+    // Sort by profit descending
+    const sortedCats = Object.entries(catProfits).sort((a, b) => b[1] - a[1]);
     
-    const ctx = document.getElementById('categoryProfitChart').getContext('2d');
+    const container = document.getElementById('categoryProfitList');
+    container.innerHTML = '';
     
-    if (categoryProfitChartInstance) {
-        categoryProfitChartInstance.destroy();
+    if (sortedCats.length === 0) {
+        container.innerHTML = '<div class="no-data">Tidak ada data</div>';
+        return;
     }
     
-    categoryProfitChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: values,
-                backgroundColor: [
-                    '#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#06b6d4'
-                ],
-                borderWidth: 0,
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'right',
-                    labels: { color: '#cbd5e1' }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const label = context.label || '';
-                            const val = formatRupiah(context.raw);
-                            return `${label}: ${val}`;
-                        }
-                    }
-                }
-            },
-            cutout: '70%'
-        }
+    sortedCats.forEach(catData => {
+        const catName = catData[0];
+        const catValue = catData[1];
+        
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'profit-item';
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'profit-cat';
+        nameSpan.textContent = catName;
+        
+        const valSpan = document.createElement('span');
+        valSpan.className = 'profit-val';
+        valSpan.textContent = formatRupiah(catValue);
+        
+        itemDiv.appendChild(nameSpan);
+        itemDiv.appendChild(valSpan);
+        
+        container.appendChild(itemDiv);
     });
 }
 

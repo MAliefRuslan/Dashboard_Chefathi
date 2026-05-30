@@ -155,7 +155,7 @@ select:hover, select:focus {
 /* Charts Section */
 .charts-section {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
 }
 
@@ -163,6 +163,10 @@ select:hover, select:focus {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
+}
+
+.full-width {
+    grid-column: 1 / -1;
 }
 
 .chart-container h3 {

@@ -1,5 +1,3 @@
-// window.rawData is loaded from data.js
-let productChartInstance = null;
 let productChartInstance = null;
 let groupChartInstance = null;
 

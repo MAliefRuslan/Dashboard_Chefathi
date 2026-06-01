@@ -4,6 +4,8 @@
     --text-secondary: #cbd5e1;
     --accent-color: #3b82f6;
     --accent-hover: #60a5fa;
+    --success: #10b981;
+    --danger: #ef4444;
     --glass-bg: rgba(30, 41, 59, 0.7);
     --glass-border: rgba(255, 255, 255, 0.1);
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
@@ -306,4 +308,17 @@ select:hover, select:focus {
     text-align: center;
     color: var(--text-secondary);
     padding: 2rem 0;
+}
+
+/* Bottom 10 Categories Section */
+.bottom-categories-section {
+    margin-top: 3rem;
+}
+
+.bottom-card h3 {
+    color: #f43f5e; /* Rose red accent for bottom items */
+}
+
+.bottom-card .item-val {
+    color: #fda4af; /* Soft rose for value */
 }

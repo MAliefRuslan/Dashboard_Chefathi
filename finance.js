@@ -50,23 +50,28 @@ function updateFinanceKPIs() {
     const months = window.financeData.months;
     const selectedBulan = getSelectedFinanceMonth();
 
-    let idx;
-    let periodLabel;
+    let idx = -1;
+    let periodLabel = "Tidak Ada Data";
 
-    if (selectedBulan && BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
-        idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
-        periodLabel = months[idx];
+    if (selectedBulan) {
+        if (BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
+            idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
+            periodLabel = selectedBulan;
+        } else {
+            idx = -1;
+            periodLabel = selectedBulan + ' (Kosong)';
+        }
     } else {
-        // Default to the last month
+        // Semua Bulan -> default KPI to last available month
         idx = data.penjualan.length - 1;
-        periodLabel = months[idx];
+        periodLabel = "Semua Bulan";
     }
 
-    const penjualan = data.penjualan[idx] || 0;
-    const hpp = data.hpp[idx] || 0;
-    const labaKotor = data.labaKotor[idx] || 0;
-    const biayaOp = data.biayaOperasional[idx] || 0;
-    const realLaba = data.realLaba[idx] || 0;
+    const penjualan = idx >= 0 ? data.penjualan[idx] || 0 : 0;
+    const hpp = idx >= 0 ? data.hpp[idx] || 0 : 0;
+    const labaKotor = idx >= 0 ? data.labaKotor[idx] || 0 : 0;
+    const biayaOp = idx >= 0 ? data.biayaOperasional[idx] || 0 : 0;
+    const realLaba = idx >= 0 ? data.realLaba[idx] || 0 : 0;
     const grossMargin = penjualan > 0 ? (labaKotor / penjualan) * 100 : 0;
     const netMargin = penjualan > 0 ? (realLaba / penjualan) * 100 : 0;
 
@@ -114,33 +119,44 @@ function updateFinanceCharts() {
     const data = window.financeData.summary;
     const selectedBulan = getSelectedFinanceMonth();
 
-    let labels, datasets;
+    let labels, datasets, chartType;
 
-    if (selectedBulan && BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
-        const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
-        labels = [window.financeData.months[idx]];
-        datasets = {
-            penjualan: [data.penjualan[idx]],
-            labaKotor: [data.labaKotor[idx]],
-            realLaba: [data.realLaba[idx]],
-            hpp: [data.hpp[idx]],
-            biayaOp: [data.biayaOperasional[idx]],
-            biayaNonOp: [data.biayaNonOperasional[idx]],
-            sewa: [data.sewaTempat[idx]],
-            pendOp: [data.pendapatanOperasional[idx]]
-        };
+    if (selectedBulan) {
+        if (BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
+            const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
+            labels = [window.financeData.months[idx]];
+            datasets = {
+                penjualan: [data.penjualan[idx] || 0],
+                hpp: [data.hpp[idx] || 0],
+                labaKotor: [data.labaKotor[idx] || 0],
+                biayaOp: [data.biayaOperasional[idx] || 0],
+                pendOp: [data.pendapatanOperasional[idx] || 0],
+                biayaNonOp: [data.biayaNonOperasional[idx] || 0],
+                sewa: [data.sewaTempat[idx] || 0],
+                realLaba: [data.realLaba[idx] || 0]
+            };
+            chartType = 'bar';
+        } else {
+            labels = [selectedBulan];
+            datasets = {
+                penjualan: [0], hpp: [0], labaKotor: [0], biayaOp: [0],
+                pendOp: [0], biayaNonOp: [0], sewa: [0], realLaba: [0]
+            };
+            chartType = 'bar';
+        }
     } else {
         labels = window.financeData.months;
         datasets = {
             penjualan: data.penjualan,
-            labaKotor: data.labaKotor,
-            realLaba: data.realLaba,
             hpp: data.hpp,
+            labaKotor: data.labaKotor,
             biayaOp: data.biayaOperasional,
+            pendOp: data.pendapatanOperasional,
             biayaNonOp: data.biayaNonOperasional,
             sewa: data.sewaTempat,
-            pendOp: data.pendapatanOperasional
+            realLaba: data.realLaba
         };
+        chartType = 'line';
     }
 
     // 1. Trend Chart (Pendapatan & Laba)
@@ -338,10 +354,15 @@ function renderFinanceTable() {
     let monthIndices;
     let displayMonths;
 
-    if (selectedBulan && BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
-        const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
-        monthIndices = [idx];
-        displayMonths = [months[idx]];
+    if (selectedBulan) {
+        if (BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
+            const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
+            monthIndices = [idx];
+            displayMonths = [months[idx]];
+        } else {
+            monthIndices = [-1]; // Explicitly empty
+            displayMonths = [selectedBulan + ' (Kosong)'];
+        }
     } else {
         monthIndices = months.map((_, i) => i);
         displayMonths = months;
@@ -374,10 +395,10 @@ function renderFinanceTable() {
         
         // Value cells (only selected months)
         monthIndices.forEach(idx => {
-            const val = row.values[idx] || 0;
+            const val = idx >= 0 ? (row.values[idx] || 0) : 0;
             const tdVal = document.createElement('td');
             tdVal.className = 'text-right';
-            if (val === 0 && row.isHeader) {
+            if ((val === 0 && row.isHeader) || idx < 0) {
                 tdVal.textContent = '';
             } else {
                 tdVal.textContent = formatRupiah(val);

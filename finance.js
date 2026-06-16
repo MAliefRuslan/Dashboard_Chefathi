@@ -163,8 +163,6 @@ function updateFinanceCharts() {
     const trendCtx = document.getElementById('financeTrendChart').getContext('2d');
     if (financeTrendChartInstance) financeTrendChartInstance.destroy();
     
-    const chartType = labels.length === 1 ? 'bar' : 'line';
-
     financeTrendChartInstance = new Chart(trendCtx, {
         type: chartType,
         data: {

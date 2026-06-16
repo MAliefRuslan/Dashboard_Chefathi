@@ -104,47 +104,57 @@
 
             <!-- FINANCE SECTION DIVIDER -->
             <div class="section-divider">
-                <h2>Laporan Keuangan & Profitabilitas</h2>
-                <p>Data Performa Finansial (Sesuai Laporan P&L)</p>
+                <h2>Laporan Keuangan &amp; Profitabilitas</h2>
+                <p>Data Performa Finansial (Sesuai Laporan P&amp;L) · <span id="finPeriodLabel" class="fin-period-badge">Semua Bulan</span></p>
+                <p class="fin-filter-hint">Gunakan filter <strong>Bulan</strong> di atas untuk melihat data per bulan</p>
             </div>
 
-            <!-- Finance KPI Cards -->
-            <section class="kpi-section kpi-finance">
-                <div class="kpi-card glassmorphism">
-                    <div class="kpi-icon">🏪</div>
-                    <div class="kpi-details">
-                        <p class="kpi-title">Penjualan Terakhir (Apr)</p>
-                        <h2 class="kpi-value" id="kpiFinPenjualan">Rp 0</h2>
+            <!-- Finance KPI Panel - Redesigned -->
+            <section class="fin-summary-panel glassmorphism">
+                <!-- Row 1: Penjualan -->
+                <div class="fin-row">
+                    <div class="fin-row-icon penjualan">🏪</div>
+                    <div class="fin-row-info">
+                        <span class="fin-row-label">Total Penjualan</span>
+                        <span class="fin-row-value" id="finValPenjualan">Rp 0</span>
                     </div>
+                    <div class="fin-row-bar-track"><div class="fin-row-bar bar-blue" id="finBarPenjualan"></div></div>
                 </div>
-                <div class="kpi-card glassmorphism">
-                    <div class="kpi-icon">📦</div>
-                    <div class="kpi-details">
-                        <p class="kpi-title">Biaya Pokok Penjualan</p>
-                        <h2 class="kpi-value text-danger" id="kpiFinHPP">Rp 0</h2>
+                <!-- Row 2: HPP -->
+                <div class="fin-row">
+                    <div class="fin-row-icon hpp">📦</div>
+                    <div class="fin-row-info">
+                        <span class="fin-row-label">Harga Pokok Penjualan (HPP)</span>
+                        <span class="fin-row-value text-danger" id="finValHPP">Rp 0</span>
                     </div>
+                    <div class="fin-row-bar-track"><div class="fin-row-bar bar-red" id="finBarHPP"></div></div>
                 </div>
-                <div class="kpi-card glassmorphism">
-                    <div class="kpi-icon">📈</div>
-                    <div class="kpi-details">
-                        <p class="kpi-title">Laba Kotor</p>
-                        <h2 class="kpi-value text-warning" id="kpiFinLabaKotor">Rp 0</h2>
-                        <span class="kpi-subtitle" id="kpiFinLabaKotorMargin">Margin: 0%</span>
+                <!-- Row 3: Laba Kotor -->
+                <div class="fin-row">
+                    <div class="fin-row-icon laba-kotor">📈</div>
+                    <div class="fin-row-info">
+                        <span class="fin-row-label">Laba Kotor <span class="fin-badge" id="finMarginKotor">0%</span></span>
+                        <span class="fin-row-value text-warning" id="finValLabaKotor">Rp 0</span>
                     </div>
+                    <div class="fin-row-bar-track"><div class="fin-row-bar bar-amber" id="finBarLabaKotor"></div></div>
                 </div>
-                <div class="kpi-card glassmorphism">
-                    <div class="kpi-icon">🏢</div>
-                    <div class="kpi-details">
-                        <p class="kpi-title">Total Biaya Operasional</p>
-                        <h2 class="kpi-value text-danger" id="kpiFinOperasional">Rp 0</h2>
+                <!-- Row 4: Biaya Operasional -->
+                <div class="fin-row">
+                    <div class="fin-row-icon biaya-op">🏢</div>
+                    <div class="fin-row-info">
+                        <span class="fin-row-label">Total Biaya Operasional</span>
+                        <span class="fin-row-value text-danger" id="finValBiayaOp">Rp 0</span>
                     </div>
+                    <div class="fin-row-bar-track"><div class="fin-row-bar bar-orange" id="finBarBiayaOp"></div></div>
                 </div>
-                <div class="kpi-card glassmorphism kpi-highlight">
-                    <div class="kpi-icon">💎</div>
-                    <div class="kpi-details">
-                        <p class="kpi-title">Real Laba (Setelah Sewa)</p>
-                        <h2 class="kpi-value text-success" id="kpiFinRealLaba">Rp 0</h2>
+                <!-- Row 5: Real Laba -->
+                <div class="fin-row fin-row-highlight">
+                    <div class="fin-row-icon real-laba">💎</div>
+                    <div class="fin-row-info">
+                        <span class="fin-row-label">Real Laba (Setelah Sewa) <span class="fin-badge fin-badge-green" id="finMarginNet">0%</span></span>
+                        <span class="fin-row-value text-success" id="finValRealLaba">Rp 0</span>
                     </div>
+                    <div class="fin-row-bar-track"><div class="fin-row-bar bar-green" id="finBarRealLaba"></div></div>
                 </div>
             </section>
 

@@ -2,6 +2,17 @@ let financeTrendChartInstance = null;
 let financeMarginChartInstance = null;
 let financeCostChartInstance = null;
 
+// Mapping from bulanFilter values → financeData month index
+const BULAN_TO_FINANCE_INDEX = {
+    'September': 0,
+    'November': 1,
+    'Desember': 2,
+    'Januari': 3,
+    'Februari': 4,
+    'Maret': 5,
+    'April': 6
+};
+
 function initFinanceDashboard() {
     if (!window.financeData) {
         console.error('No finance data found in window.financeData');
@@ -9,68 +20,168 @@ function initFinanceDashboard() {
     }
 
     try {
-        updateFinanceKPIs();
-        updateFinanceCharts();
-        renderFinanceTable();
+        updateFinanceSection();
     } catch (error) {
         console.error('Error rendering finance dashboard:', error);
     }
+
+    // Listen to filter changes
+    const bulanFilter = document.getElementById('bulanFilter');
+    if (bulanFilter) {
+        bulanFilter.addEventListener('change', updateFinanceSection);
+    }
+}
+
+function getSelectedFinanceMonth() {
+    const bulanFilter = document.getElementById('bulanFilter');
+    if (!bulanFilter) return null;
+    const val = bulanFilter.value;
+    if (val === 'All') return null; // Show all months
+    return val;
+}
+
+function updateFinanceSection() {
+    updateFinanceKPIs();
+    updateFinanceCharts();
+    renderFinanceTable();
 }
 
 function updateFinanceKPIs() {
     const data = window.financeData.summary;
-    // Get the last month's index (April)
-    const lastIdx = data.penjualan.length - 1;
+    const months = window.financeData.months;
+    const selectedBulan = getSelectedFinanceMonth();
 
-    document.getElementById('kpiFinPenjualan').textContent = formatRupiah(data.penjualan[lastIdx]);
-    document.getElementById('kpiFinHPP').textContent = formatRupiah(data.hpp[lastIdx]);
-    
-    // Calculate margin for Laba Kotor
-    const grossMargin = (data.labaKotor[lastIdx] / data.penjualan[lastIdx]) * 100;
-    document.getElementById('kpiFinLabaKotor').textContent = formatRupiah(data.labaKotor[lastIdx]);
-    document.getElementById('kpiFinLabaKotorMargin').textContent = `Margin: ${grossMargin.toFixed(1)}%`;
-    
-    document.getElementById('kpiFinOperasional').textContent = formatRupiah(data.biayaOperasional[lastIdx]);
-    document.getElementById('kpiFinRealLaba').textContent = formatRupiah(data.realLaba[lastIdx]);
+    let idx;
+    let periodLabel;
+
+    if (selectedBulan && BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
+        idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
+        periodLabel = months[idx];
+    } else {
+        // Default to the last month
+        idx = data.penjualan.length - 1;
+        periodLabel = months[idx];
+    }
+
+    const penjualan = data.penjualan[idx] || 0;
+    const hpp = data.hpp[idx] || 0;
+    const labaKotor = data.labaKotor[idx] || 0;
+    const biayaOp = data.biayaOperasional[idx] || 0;
+    const realLaba = data.realLaba[idx] || 0;
+    const grossMargin = penjualan > 0 ? (labaKotor / penjualan) * 100 : 0;
+    const netMargin = penjualan > 0 ? (realLaba / penjualan) * 100 : 0;
+
+    // Update period label
+    const periodEl = document.getElementById('finPeriodLabel');
+    if (periodEl) periodEl.textContent = `Bulan: ${periodLabel}`;
+
+    // Update values
+    setFinVal('finValPenjualan', penjualan);
+    setFinVal('finValHPP', hpp);
+    setFinVal('finValLabaKotor', labaKotor);
+    setFinVal('finValBiayaOp', biayaOp);
+    setFinVal('finValRealLaba', realLaba);
+
+    // Update margins
+    const marginEl = document.getElementById('finMarginKotor');
+    if (marginEl) marginEl.textContent = grossMargin.toFixed(1) + '%';
+
+    const netMarginEl = document.getElementById('finMarginNet');
+    if (netMarginEl) netMarginEl.textContent = netMargin.toFixed(1) + '%';
+
+    // Update bar widths for visual comparison
+    const maxVal = Math.max(penjualan, 1);
+    setBarWidth('finBarPenjualan', penjualan, maxVal);
+    setBarWidth('finBarHPP', hpp, maxVal);
+    setBarWidth('finBarLabaKotor', labaKotor, maxVal);
+    setBarWidth('finBarBiayaOp', biayaOp, maxVal);
+    setBarWidth('finBarRealLaba', realLaba, maxVal);
+}
+
+function setFinVal(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = formatRupiah(value);
+}
+
+function setBarWidth(id, value, maxVal) {
+    const el = document.getElementById(id);
+    if (el) {
+        const pct = Math.max((value / maxVal) * 100, 2);
+        el.style.width = pct + '%';
+    }
 }
 
 function updateFinanceCharts() {
     const data = window.financeData.summary;
-    const labels = window.financeData.months;
+    const selectedBulan = getSelectedFinanceMonth();
+
+    let labels, datasets;
+
+    if (selectedBulan && BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
+        const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
+        labels = [window.financeData.months[idx]];
+        datasets = {
+            penjualan: [data.penjualan[idx]],
+            labaKotor: [data.labaKotor[idx]],
+            realLaba: [data.realLaba[idx]],
+            hpp: [data.hpp[idx]],
+            biayaOp: [data.biayaOperasional[idx]],
+            biayaNonOp: [data.biayaNonOperasional[idx]],
+            sewa: [data.sewaTempat[idx]],
+            pendOp: [data.pendapatanOperasional[idx]]
+        };
+    } else {
+        labels = window.financeData.months;
+        datasets = {
+            penjualan: data.penjualan,
+            labaKotor: data.labaKotor,
+            realLaba: data.realLaba,
+            hpp: data.hpp,
+            biayaOp: data.biayaOperasional,
+            biayaNonOp: data.biayaNonOperasional,
+            sewa: data.sewaTempat,
+            pendOp: data.pendapatanOperasional
+        };
+    }
 
     // 1. Trend Chart (Pendapatan & Laba)
     const trendCtx = document.getElementById('financeTrendChart').getContext('2d');
     if (financeTrendChartInstance) financeTrendChartInstance.destroy();
     
+    const chartType = labels.length === 1 ? 'bar' : 'line';
+
     financeTrendChartInstance = new Chart(trendCtx, {
-        type: 'line',
+        type: chartType,
         data: {
             labels: labels,
             datasets: [
                 {
                     label: 'Penjualan',
-                    data: data.penjualan,
+                    data: datasets.penjualan,
                     borderColor: '#3b82f6',
-                    backgroundColor: 'transparent',
+                    backgroundColor: chartType === 'bar' ? 'rgba(59,130,246,0.7)' : 'transparent',
                     borderWidth: 2,
-                    tension: 0.3
+                    tension: 0.3,
+                    borderRadius: chartType === 'bar' ? 8 : 0
                 },
                 {
                     label: 'Laba Kotor',
-                    data: data.labaKotor,
+                    data: datasets.labaKotor,
                     borderColor: '#f59e0b',
-                    backgroundColor: 'transparent',
+                    backgroundColor: chartType === 'bar' ? 'rgba(245,158,11,0.7)' : 'transparent',
                     borderWidth: 2,
-                    tension: 0.3
+                    tension: 0.3,
+                    borderRadius: chartType === 'bar' ? 8 : 0
                 },
                 {
                     label: 'Real Laba',
-                    data: data.realLaba,
+                    data: datasets.realLaba,
                     borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    backgroundColor: chartType === 'bar' ? 'rgba(16,185,129,0.7)' : 'rgba(16, 185, 129, 0.1)',
                     borderWidth: 2,
                     tension: 0.3,
-                    fill: true
+                    fill: chartType !== 'bar',
+                    borderRadius: chartType === 'bar' ? 8 : 0
                 }
             ]
         },
@@ -78,15 +189,15 @@ function updateFinanceCharts() {
     });
 
     // 2. Margin Profitabilitas
-    const grossMargin = data.labaKotor.map((val, i) => (val / data.penjualan[i]) * 100);
-    const opMargin = data.pendapatanOperasional.map((val, i) => (val / data.penjualan[i]) * 100);
-    const netMargin = data.realLaba.map((val, i) => (val / data.penjualan[i]) * 100);
+    const grossMargin = datasets.labaKotor.map((val, i) => (val / (datasets.penjualan[i] || 1)) * 100);
+    const opMargin = datasets.pendOp.map((val, i) => (val / (datasets.penjualan[i] || 1)) * 100);
+    const netMargin = datasets.realLaba.map((val, i) => (val / (datasets.penjualan[i] || 1)) * 100);
 
     const marginCtx = document.getElementById('financeMarginChart').getContext('2d');
     if (financeMarginChartInstance) financeMarginChartInstance.destroy();
     
     financeMarginChartInstance = new Chart(marginCtx, {
-        type: 'line',
+        type: chartType,
         data: {
             labels: labels,
             datasets: [
@@ -94,22 +205,28 @@ function updateFinanceCharts() {
                     label: 'Gross Margin %',
                     data: grossMargin,
                     borderColor: '#f59e0b',
-                    borderDash: [5, 5],
-                    tension: 0.3
+                    backgroundColor: chartType === 'bar' ? 'rgba(245,158,11,0.7)' : 'transparent',
+                    borderDash: chartType === 'bar' ? [] : [5, 5],
+                    tension: 0.3,
+                    borderRadius: chartType === 'bar' ? 8 : 0
                 },
                 {
                     label: 'Operating Margin %',
                     data: opMargin,
                     borderColor: '#8b5cf6',
-                    borderDash: [5, 5],
-                    tension: 0.3
+                    backgroundColor: chartType === 'bar' ? 'rgba(139,92,246,0.7)' : 'transparent',
+                    borderDash: chartType === 'bar' ? [] : [5, 5],
+                    tension: 0.3,
+                    borderRadius: chartType === 'bar' ? 8 : 0
                 },
                 {
                     label: 'Net Margin (Real) %',
                     data: netMargin,
                     borderColor: '#10b981',
+                    backgroundColor: chartType === 'bar' ? 'rgba(16,185,129,0.7)' : 'transparent',
                     borderWidth: 3,
-                    tension: 0.3
+                    tension: 0.3,
+                    borderRadius: chartType === 'bar' ? 8 : 0
                 }
             ]
         },
@@ -127,34 +244,39 @@ function updateFinanceCharts() {
             datasets: [
                 {
                     label: 'HPP',
-                    data: data.hpp,
-                    backgroundColor: '#ef4444'
+                    data: datasets.hpp,
+                    backgroundColor: '#ef4444',
+                    borderRadius: 4
                 },
                 {
                     label: 'Biaya Operasional',
-                    data: data.biayaOperasional,
-                    backgroundColor: '#f97316'
+                    data: datasets.biayaOp,
+                    backgroundColor: '#f97316',
+                    borderRadius: 4
                 },
                 {
                     label: 'Biaya Non-Operasional',
-                    data: data.biayaNonOperasional,
-                    backgroundColor: '#eab308'
+                    data: datasets.biayaNonOp,
+                    backgroundColor: '#eab308',
+                    borderRadius: 4
                 },
                 {
                     label: 'Sewa Tempat',
-                    data: data.sewaTempat,
-                    backgroundColor: '#6366f1'
+                    data: datasets.sewa,
+                    backgroundColor: '#6366f1',
+                    borderRadius: 4
                 }
             ]
         },
         options: {
             ...getChartOptions('Rp'),
             scales: {
-                x: { stacked: true, grid: { display: false } },
+                x: { stacked: true, grid: { display: false }, ticks: { color: '#cbd5e1' } },
                 y: { 
                     stacked: true, 
                     grid: { color: 'rgba(255, 255, 255, 0.1)' },
                     ticks: {
+                        color: '#cbd5e1',
                         callback: function(value) {
                             return 'Rp ' + (value / 1000000).toFixed(0) + 'M';
                         }
@@ -172,7 +294,7 @@ function getChartOptions(format) {
         plugins: {
             legend: {
                 position: 'bottom',
-                labels: { color: '#cbd5e1' }
+                labels: { color: '#cbd5e1', padding: 16, usePointStyle: true }
             },
             tooltip: {
                 callbacks: {
@@ -199,7 +321,7 @@ function getChartOptions(format) {
                         if (format === 'Rp') {
                             return 'Rp ' + (value / 1000000).toFixed(0) + 'M';
                         }
-                        return value + '%';
+                        return value.toFixed(0) + '%';
                     }
                 }
             }
@@ -212,15 +334,27 @@ function renderFinanceTable() {
     tableBody.innerHTML = '';
     
     const { allRows, months } = window.financeData;
+    const selectedBulan = getSelectedFinanceMonth();
     
+    let monthIndices;
+    let displayMonths;
+
+    if (selectedBulan && BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
+        const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
+        monthIndices = [idx];
+        displayMonths = [months[idx]];
+    } else {
+        monthIndices = months.map((_, i) => i);
+        displayMonths = months;
+    }
+
     // Create header row for months
     const thead = document.querySelector('#financeTable thead tr');
-    // Keep first column (Deskripsi), remove existing month columns if any to prevent duplicates on re-render
     while (thead.children.length > 1) {
         thead.removeChild(thead.lastChild);
     }
     
-    months.forEach(m => {
+    displayMonths.forEach(m => {
         const th = document.createElement('th');
         th.textContent = m;
         th.className = 'text-right';
@@ -239,8 +373,9 @@ function renderFinanceTable() {
         tdDesc.textContent = row.deskripsi;
         tr.appendChild(tdDesc);
         
-        // Value cells
-        row.values.forEach(val => {
+        // Value cells (only selected months)
+        monthIndices.forEach(idx => {
+            const val = row.values[idx] || 0;
             const tdVal = document.createElement('td');
             tdVal.className = 'text-right';
             if (val === 0 && row.isHeader) {

@@ -3,20 +3,19 @@ let financeMarginChartInstance = null;
 let financeCostChartInstance = null;
 
 // Mapping from bulanFilter values → financeData month index
-const BULAN_TO_FINANCE_INDEX = {
-    'September': 0,
-    'November': 1,
-    'Desember': 2,
-    'Januari': 3,
-    'Februari': 4,
-    'Maret': 5,
-    'April': 6
-};
+let BULAN_TO_FINANCE_INDEX = {};
 
 function initFinanceDashboard() {
     if (!window.financeData) {
         console.error('No finance data found in window.financeData');
         return;
+    }
+
+    // Build dynamic mapping if available
+    if (window.financeData.monthFilterNames) {
+        window.financeData.monthFilterNames.forEach((name, idx) => {
+            BULAN_TO_FINANCE_INDEX[name] = idx;
+        });
     }
 
     try {

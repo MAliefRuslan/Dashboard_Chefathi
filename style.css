@@ -356,8 +356,20 @@ select:hover, select:focus {
 .text-right { text-align: right !important; }
 
 /* Finance KPI Tweaks */
+.kpi-finance {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+@media (min-width: 1280px) {
+    .kpi-finance {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 .kpi-finance .kpi-card {
-    min-width: 250px;
+    min-width: 0;
+    padding: 1.25rem;
 }
 .kpi-subtitle {
     font-size: 0.85rem;
@@ -367,6 +379,13 @@ select:hover, select:focus {
 .kpi-highlight {
     background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.3);
+}
+/* Center the last card if it wraps on smaller screens */
+@media (max-width: 1279px) and (min-width: 768px) {
+    .kpi-highlight {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
 }
 
 /* Table Section */

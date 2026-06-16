@@ -101,10 +101,101 @@
                     <!-- Dynamic content will be injected here -->
                 </div>
             </section>
+
+            <!-- FINANCE SECTION DIVIDER -->
+            <div class="section-divider">
+                <h2>Laporan Keuangan & Profitabilitas</h2>
+                <p>Data Performa Finansial (Sesuai Laporan P&L)</p>
+            </div>
+
+            <!-- Finance KPI Cards -->
+            <section class="kpi-section kpi-finance">
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">🏪</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Penjualan Terakhir (Apr)</p>
+                        <h2 class="kpi-value" id="kpiFinPenjualan">Rp 0</h2>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">📦</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Biaya Pokok Penjualan</p>
+                        <h2 class="kpi-value text-danger" id="kpiFinHPP">Rp 0</h2>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">📈</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Laba Kotor</p>
+                        <h2 class="kpi-value text-warning" id="kpiFinLabaKotor">Rp 0</h2>
+                        <span class="kpi-subtitle" id="kpiFinLabaKotorMargin">Margin: 0%</span>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon">🏢</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Total Biaya Operasional</p>
+                        <h2 class="kpi-value text-danger" id="kpiFinOperasional">Rp 0</h2>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism kpi-highlight">
+                    <div class="kpi-icon">💎</div>
+                    <div class="kpi-details">
+                        <p class="kpi-title">Real Laba (Setelah Sewa)</p>
+                        <h2 class="kpi-value text-success" id="kpiFinRealLaba">Rp 0</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finance Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container glassmorphism full-width">
+                    <h3>Tren Pendapatan & Laba</h3>
+                    <div class="canvas-wrapper">
+                        <canvas id="financeTrendChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glassmorphism">
+                    <h3>Margin Profitabilitas (%)</h3>
+                    <div class="canvas-wrapper">
+                        <canvas id="financeMarginChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glassmorphism">
+                    <h3>Struktur Biaya (HPP vs Overhead)</h3>
+                    <div class="canvas-wrapper">
+                        <canvas id="financeCostChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finance Table Section -->
+            <section class="finance-table-section">
+                <div class="glassmorphism table-container">
+                    <h3>Detail Laporan Laba Rugi (Income Statement)</h3>
+                    <div class="table-responsive">
+                        <table id="financeTable" class="finance-table">
+                            <thead>
+                                <tr>
+                                    <th>Deskripsi</th>
+                                    <!-- Month headers injected via JS -->
+                                </tr>
+                            </thead>
+                            <tbody id="financeTableBody">
+                                <!-- Data injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
     
     <script src="data.js"></script>
     <script src="app.js"></script>
+    <script src="finance_data.js"></script>
+    <script src="finance.js"></script>
 </body>
 </html>

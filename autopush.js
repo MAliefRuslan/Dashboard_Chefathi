@@ -28,7 +28,15 @@ const processAndPush = () => {
         
         // Generate data.js which is loaded by index.html
         fs.writeFileSync('data.js', 'window.rawData = ' + jsonDataString + ';');
-        console.log('Data successfully embedded into data.js. Committing and pushing...');
+        console.log('Data successfully embedded into data.js.');
+    }
+    
+    // Regenerate finance_data.js
+    if (fs.existsSync('parse_finance.js')) {
+        exec('node parse_finance.js', (err) => {
+            if (err) console.error('Failed to update finance_data:', err.message);
+            else console.log('Finance data successfully updated.');
+        });
     }
     
     // Use powershell syntax for multiple commands using `;`

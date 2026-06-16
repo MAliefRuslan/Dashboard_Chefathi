@@ -322,3 +322,127 @@ select:hover, select:focus {
 .bottom-card .item-val {
     color: #fda4af; /* Soft rose for value */
 }
+
+/* ==========================================================================
+   FINANCE SECTION STYLES
+   ========================================================================== */
+
+/* Section Divider */
+.section-divider {
+    margin: 4rem 0 2rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.section-divider h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #10b981, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.section-divider p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Text Utility Classes */
+.text-success { color: var(--success) !important; }
+.text-danger { color: var(--danger) !important; }
+.text-warning { color: #f59e0b !important; }
+.text-right { text-align: right !important; }
+
+/* Finance KPI Tweaks */
+.kpi-finance .kpi-card {
+    min-width: 250px;
+}
+.kpi-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+.kpi-highlight {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Table Section */
+.finance-table-section {
+    margin-top: 2rem;
+}
+
+.table-container {
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.table-container h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.finance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.finance-table th,
+.finance-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.finance-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+}
+
+.finance-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Finance Row Hierarchy */
+.finance-header-row td {
+    color: var(--accent-hover);
+    font-weight: 600;
+    background: rgba(59, 130, 246, 0.05);
+    padding-top: 1.5rem;
+}
+
+.finance-subtotal-row td {
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .finance-table {
+        font-size: 0.85rem;
+    }
+    .finance-table th,
+    .finance-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}

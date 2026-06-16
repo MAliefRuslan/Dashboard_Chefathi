@@ -42,7 +42,6 @@ function getSelectedFinanceMonth() {
 function updateFinanceSection() {
     updateFinanceKPIs();
     updateFinanceCharts();
-    renderFinanceTable();
 }
 
 function updateFinanceKPIs() {
@@ -342,71 +341,6 @@ function getChartOptions(format) {
     };
 }
 
-function renderFinanceTable() {
-    const tableBody = document.getElementById('financeTableBody');
-    tableBody.innerHTML = '';
-    
-    const { allRows, months } = window.financeData;
-    const selectedBulan = getSelectedFinanceMonth();
-    
-    let monthIndices;
-    let displayMonths;
-
-    if (selectedBulan) {
-        if (BULAN_TO_FINANCE_INDEX[selectedBulan] !== undefined) {
-            const idx = BULAN_TO_FINANCE_INDEX[selectedBulan];
-            monthIndices = [idx];
-            displayMonths = [months[idx]];
-        } else {
-            monthIndices = [-1]; // Explicitly empty
-            displayMonths = [selectedBulan + ' (Kosong)'];
-        }
-    } else {
-        monthIndices = months.map((_, i) => i);
-        displayMonths = months;
-    }
-
-    // Create header row for months
-    const thead = document.querySelector('#financeTable thead tr');
-    while (thead.children.length > 1) {
-        thead.removeChild(thead.lastChild);
-    }
-    
-    displayMonths.forEach(m => {
-        const th = document.createElement('th');
-        th.textContent = m;
-        th.className = 'text-right';
-        thead.appendChild(th);
-    });
-
-    // Populate rows
-    allRows.forEach(row => {
-        const tr = document.createElement('tr');
-        
-        if (row.isHeader) tr.className = 'finance-header-row';
-        if (row.isSubtotal) tr.className = 'finance-subtotal-row';
-        
-        // Description cell
-        const tdDesc = document.createElement('td');
-        tdDesc.textContent = row.deskripsi;
-        tr.appendChild(tdDesc);
-        
-        // Value cells (only selected months)
-        monthIndices.forEach(idx => {
-            const val = idx >= 0 ? (row.values[idx] || 0) : 0;
-            const tdVal = document.createElement('td');
-            tdVal.className = 'text-right';
-            if ((val === 0 && row.isHeader) || idx < 0) {
-                tdVal.textContent = '';
-            } else {
-                tdVal.textContent = formatRupiah(val);
-                if (val < 0) tdVal.classList.add('text-danger');
-            }
-            tr.appendChild(tdVal);
-        });
-        
-        tableBody.appendChild(tr);
-    });
-}
+// Table rendering removed for confidentiality
 
 document.addEventListener('DOMContentLoaded', initFinanceDashboard);

@@ -5,14 +5,45 @@ const wb = XLSX.readFile('Laporan_Keuangan.xlsx');
 const ws = wb.Sheets[wb.SheetNames[0]];
 const rawData = XLSX.utils.sheet_to_json(ws);
 
-const monthKeys = ['SEPTEMBER', 'NOVEMBER', 'DESEMBER', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL'];
-const pctKeys = ['__EMPTY', '__EMPTY_1', '__EMPTY_2', '__EMPTY_3', '__EMPTY_4', '__EMPTY_5', '__EMPTY_6'];
-const monthLabels = ['Sep', 'Nov', 'Des', 'Jan', 'Feb', 'Mar', 'Apr'];
+// All possible months we know about, in chronological order
+const ALL_MONTHS = [
+    { key: 'SEPTEMBER', label: 'Sep', filterName: 'September' },
+    { key: 'OKTOBER', label: 'Okt', filterName: 'Oktober' },
+    { key: 'NOVEMBER', label: 'Nov', filterName: 'November' },
+    { key: 'DESEMBER', label: 'Des', filterName: 'Desember' },
+    { key: 'JANUARI', label: 'Jan', filterName: 'Januari' },
+    { key: 'FEBRUARI', label: 'Feb', filterName: 'Februari' },
+    { key: 'MARET', label: 'Mar', filterName: 'Maret' },
+    { key: 'APRIL', label: 'Apr', filterName: 'April' },
+    { key: 'MAY', label: 'Mei', filterName: 'May' },
+    { key: 'JUNI', label: 'Jun', filterName: 'Juni' },
+    { key: 'JULI', label: 'Jul', filterName: 'Juli' },
+    { key: 'AGUSTUS', label: 'Ags', filterName: 'Agustus' }
+];
+
+// Auto-detect which months actually exist in the data
+const sampleRow = rawData.find(r => r.Deskripsi && r.Deskripsi.includes('40000 Penjualan'));
+const existingKeys = sampleRow ? Object.keys(sampleRow) : [];
+
+const activeMonths = ALL_MONTHS.filter(m => existingKeys.includes(m.key));
+
+const monthKeys = activeMonths.map(m => m.key);
+const monthLabels = activeMonths.map(m => m.label);
+const monthFilterNames = activeMonths.map(m => m.filterName);
+
+// Build percentage key mapping dynamically
+// __EMPTY columns follow each month column in order
+const pctKeys = monthKeys.map((_, i) => {
+    if (i === 0) return '__EMPTY';
+    return '__EMPTY_' + i;
+});
+
+console.log('Detected months:', monthLabels);
+console.log('Month keys:', monthKeys);
 
 function parseVal(v) {
     if (v === undefined || v === null || v === '') return 0;
     if (typeof v === 'number') return v;
-    // Handle comma decimal separator: "44802288,29" → 44802288.29
     const s = String(v).replace(/\./g, '').replace(',', '.');
     const n = parseFloat(s);
     return isNaN(n) ? 0 : n;
@@ -20,10 +51,9 @@ function parseVal(v) {
 
 function parsePct(v) {
     if (v === undefined || v === null || v === '') return 0;
-    if (typeof v === 'number') return v; // Already in fraction form (0.67 = 67%)
+    if (typeof v === 'number') return v;
     const s = String(v);
     if (s.includes('%')) {
-        // Already in percent form like "0,23%" → convert to fraction
         const num = parseFloat(s.replace('%', '').replace(',', '.'));
         return isNaN(num) ? 0 : num / 100;
     }
@@ -92,6 +122,7 @@ const allRows = rawData.map(row => {
 const financeData = {
     months: monthLabels,
     monthsFull: monthKeys,
+    monthFilterNames: monthFilterNames,
     summary: summary,
     overhead: overhead,
     biayaLain: biayaLain,
@@ -100,7 +131,7 @@ const financeData = {
 
 fs.writeFileSync('finance_data.js', 'window.financeData = ' + JSON.stringify(financeData, null, 2) + ';');
 console.log('finance_data.js generated successfully!');
-console.log('Months:', monthLabels);
+console.log('Active months:', monthLabels);
 console.log('Penjualan:', summary.penjualan);
 console.log('HPP:', summary.hpp);
 console.log('Laba Kotor:', summary.labaKotor);

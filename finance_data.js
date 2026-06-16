@@ -1,99 +1,72 @@
 window.financeData = {
   "months": [
-    "Sep",
-    "Nov",
-    "Des",
     "Jan",
     "Feb",
     "Mar",
     "Apr"
   ],
   "monthsFull": [
-    "SEPTEMBER",
-    "NOVEMBER",
-    "DESEMBER",
     "JANUARI",
     "FEBRUARI",
     "MARET",
     "APRIL"
   ],
+  "monthFilterNames": [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April"
+  ],
   "summary": {
     "penjualan": [
-      0,
-      0,
-      0,
       695140000,
       597955000,
       471186000,
       765666000
     ],
     "hpp": [
-      0,
-      0,
-      0,
       476509751,
       421119997,
       309498067.04,
       514729181
     ],
     "labaKotor": [
-      0,
-      0,
-      0,
       218630249,
       176835003,
       161667932.96,
       250936819
     ],
     "biayaOperasional": [
-      0,
-      0,
-      0,
       46413345,
       47650345,
       46675644.76,
       0
     ],
     "pendapatanOperasional": [
-      0,
-      0,
-      0,
       172216904,
       129184658,
       114992288.2,
       209536819
     ],
     "biayaNonOperasional": [
-      0,
-      0,
-      0,
       9304472,
       8409694,
       9323409,
       206935034
     ],
     "sewaTempat": [
-      0,
-      0,
-      0,
       60000000,
       60000000,
       60000000,
       60000000
     ],
     "labaBersih": [
-      0,
-      0,
-      0,
       162912432,
       120774964,
       105668879,
       105668879
     ],
     "realLaba": [
-      0,
-      0,
-      0,
       102912432,
       60774964,
       45668879,
@@ -102,18 +75,12 @@ window.financeData = {
   },
   "overhead": {
     "gaji": [
-      0,
-      0,
-      0,
       41149000,
       41021000,
       41410000,
       591000
     ],
     "utilitas": [
-      0,
-      0,
-      0,
       4470000,
       5835000,
       4471300,
@@ -123,15 +90,9 @@ window.financeData = {
       0,
       0,
       0,
-      0,
-      0,
-      0,
       20000000
     ],
     "penyusutan": [
-      0,
-      0,
-      0,
       794345,
       794345,
       794344.76,
@@ -140,27 +101,18 @@ window.financeData = {
   },
   "biayaLain": {
     "pengeluaranLain": [
-      0,
-      0,
-      0,
       7734400,
       7017800,
       7906000,
       0
     ],
     "feeEwallet": [
-      0,
-      0,
-      0,
       1570072,
       1391894,
       1417409,
       0
     ],
     "penyesuaianBarang": [
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -174,15 +126,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -194,9 +140,6 @@ window.financeData = {
     {
       "deskripsi": "40000 Penjualan",
       "values": [
-        0,
-        0,
-        0,
         695140000,
         597955000,
         471186000,
@@ -206,10 +149,7 @@ window.financeData = {
         1,
         1,
         1,
-        1,
-        0,
-        0,
-        0
+        1
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -220,15 +160,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -243,15 +177,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -266,15 +194,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -289,15 +211,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -311,16 +227,10 @@ window.financeData = {
       "values": [
         0,
         0,
-        0,
-        0,
-        0,
         20000,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -332,9 +242,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Pendapatan",
       "values": [
-        0,
-        0,
-        0,
         695140000,
         597955000,
         471166000,
@@ -344,10 +251,7 @@ window.financeData = {
         1,
         1,
         1,
-        1.63,
-        0,
-        0,
-        0
+        1.63
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -358,15 +262,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -378,9 +276,6 @@ window.financeData = {
     {
       "deskripsi": "Persediaan awal",
       "values": [
-        0,
-        0,
-        0,
         61641464,
         64116742,
         51621535,
@@ -390,10 +285,7 @@ window.financeData = {
         0.09,
         0.11,
         0.11,
-        0.1,
-        0,
-        0,
-        0
+        0.1
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -401,9 +293,6 @@ window.financeData = {
     {
       "deskripsi": "50000 Pembelian",
       "values": [
-        0,
-        0,
-        0,
         478985030,
         408624790,
         302678820,
@@ -413,10 +302,7 @@ window.financeData = {
         0.69,
         0.68,
         0.64,
-        1.12,
-        0,
-        0,
-        0
+        1.12
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -427,15 +313,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -450,15 +330,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -473,15 +347,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -496,15 +364,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -516,9 +378,6 @@ window.financeData = {
     {
       "deskripsi": "Persediaan akhir",
       "values": [
-        0,
-        0,
-        0,
         64116743,
         51621535,
         44802288.29,
@@ -528,10 +387,7 @@ window.financeData = {
         0.09,
         0.09,
         0.1,
-        0.12,
-        0,
-        0,
-        0
+        0.12
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -539,9 +395,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Biaya pokok penjualan",
       "values": [
-        0,
-        0,
-        0,
         476509751,
         421119997,
         309498067.04,
@@ -551,10 +404,7 @@ window.financeData = {
         0.69,
         0.7,
         0.66,
-        1.09,
-        0,
-        0,
-        0
+        1.09
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -562,9 +412,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Laba kotor",
       "values": [
-        0,
-        0,
-        0,
         218630249,
         176835003,
         161667932.96,
@@ -574,10 +421,7 @@ window.financeData = {
         0.31,
         0.3,
         0.34,
-        0.53,
-        0,
-        0,
-        0
+        0.53
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -588,19 +432,13 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         36338000
       ],
       "percentages": [
         0,
         0,
         0,
-        0.08,
-        0,
-        0,
-        0
+        0.08
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -611,19 +449,13 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         4471000
       ],
       "percentages": [
         0,
         0,
         0,
-        0.01,
-        0,
-        0,
-        0
+        0.01
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -631,9 +463,6 @@ window.financeData = {
     {
       "deskripsi": "60100 Biaya gaji",
       "values": [
-        0,
-        0,
-        0,
         41149000,
         41021000,
         41410000,
@@ -643,9 +472,6 @@ window.financeData = {
         0.06,
         0.07,
         0.09,
-        0,
-        0,
-        0,
         0
       ],
       "isHeader": false,
@@ -654,9 +480,6 @@ window.financeData = {
     {
       "deskripsi": "60200 Biaya air listrik telephone",
       "values": [
-        0,
-        0,
-        0,
         4470000,
         5835000,
         4471300,
@@ -666,10 +489,7 @@ window.financeData = {
         0.01,
         0.01,
         0.01,
-        0.09,
-        0,
-        0,
-        0
+        0.09
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -680,19 +500,13 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         20000000
       ],
       "percentages": [
         0,
         0,
         0,
-        0.04,
-        0,
-        0,
-        0
+        0.04
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -700,18 +514,12 @@ window.financeData = {
     {
       "deskripsi": "60400 Biaya penyusutan",
       "values": [
-        0,
-        0,
-        0,
         794345,
         794345,
         794344.76,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -723,9 +531,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Overhead",
       "values": [
-        0,
-        0,
-        0,
         46413345,
         47650345,
         46675644.76,
@@ -735,9 +540,6 @@ window.financeData = {
         0.07,
         0.08,
         0.1,
-        0,
-        0,
-        0,
         0
       ],
       "isHeader": false,
@@ -746,9 +548,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Biaya Operasional",
       "values": [
-        0,
-        0,
-        0,
         46413345,
         47650345,
         46675644.76,
@@ -758,9 +557,6 @@ window.financeData = {
         0.07,
         0.08,
         0.1,
-        0,
-        0,
-        0,
         0
       ],
       "isHeader": false,
@@ -769,9 +565,6 @@ window.financeData = {
     {
       "deskripsi": "Total Pendapatan bersih operasional",
       "values": [
-        0,
-        0,
-        0,
         172216904,
         129184658,
         114992288.2,
@@ -781,10 +574,7 @@ window.financeData = {
         0.25,
         0.22,
         0.24,
-        0.44,
-        0,
-        0,
-        0
+        0.44
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -795,19 +585,13 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         20000000
       ],
       "percentages": [
         0,
         0,
         0,
-        0.04,
-        0,
-        0,
-        0
+        0.04
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -818,19 +602,13 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         20803100
       ],
       "percentages": [
         0,
         0,
         0,
-        0.04,
-        0,
-        0,
-        0
+        0.04
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -838,9 +616,6 @@ window.financeData = {
     {
       "deskripsi": "80000 Pengeluaran lain lain",
       "values": [
-        0,
-        0,
-        0,
         7734400,
         7017800,
         7906000,
@@ -850,9 +625,6 @@ window.financeData = {
         0.01,
         0.01,
         0.02,
-        0,
-        0,
-        0,
         0
       ],
       "isHeader": false,
@@ -864,15 +636,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -887,15 +653,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         1798685
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -907,9 +667,6 @@ window.financeData = {
     {
       "deskripsi": "80003 Fee E-wallet",
       "values": [
-        0,
-        0,
-        0,
         1570072,
         1391894,
         1417409,
@@ -919,9 +676,6 @@ window.financeData = {
         0.0023,
         0.0023,
         0.003,
-        0,
-        0,
-        0,
         0
       ],
       "isHeader": false,
@@ -933,19 +687,13 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         22601785
       ],
       "percentages": [
         0,
         0,
         0,
-        0.05,
-        0,
-        0,
-        0
+        0.05
       ],
       "isHeader": false,
       "isSubtotal": false
@@ -953,9 +701,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Biaya lainnya",
       "values": [
-        0,
-        0,
-        0,
         9304472,
         8409694,
         9323409,
@@ -965,10 +710,7 @@ window.financeData = {
         0.01,
         0.01,
         0.02,
-        -0.01,
-        0,
-        0,
-        0
+        -0.01
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -976,9 +718,6 @@ window.financeData = {
     {
       "deskripsi": "SubTotal Biaya non operasional",
       "values": [
-        0,
-        0,
-        0,
         9304472,
         8409694,
         9323409,
@@ -988,10 +727,7 @@ window.financeData = {
         0.01,
         0.01,
         0.02,
-        0.44,
-        0,
-        0,
-        0
+        0.44
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -1002,15 +738,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1025,15 +755,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1048,15 +772,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1071,15 +789,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1094,15 +806,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1117,15 +823,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1140,15 +840,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1163,15 +857,9 @@ window.financeData = {
         0,
         0,
         0,
-        0,
-        0,
-        0,
         0
       ],
       "percentages": [
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1183,9 +871,6 @@ window.financeData = {
     {
       "deskripsi": "Total pendapatan non operasional",
       "values": [
-        0,
-        0,
-        0,
         -9304472,
         -8409694,
         -9323409,
@@ -1195,10 +880,7 @@ window.financeData = {
         -0.01,
         -0.01,
         -0.02,
-        -0.02,
-        0,
-        0,
-        0
+        -0.02
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -1206,9 +888,6 @@ window.financeData = {
     {
       "deskripsi": "SEWA TEMPAT",
       "values": [
-        0,
-        0,
-        0,
         60000000,
         60000000,
         60000000,
@@ -1218,10 +897,7 @@ window.financeData = {
         0.09,
         0.1,
         0.13,
-        0.13,
-        0,
-        0,
-        0
+        0.13
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -1229,9 +905,6 @@ window.financeData = {
     {
       "deskripsi": "Total Laba bersih",
       "values": [
-        0,
-        0,
-        0,
         162912432,
         120774964,
         105668879,
@@ -1241,10 +914,7 @@ window.financeData = {
         0.23,
         0.2,
         0.22,
-        0.22,
-        0,
-        0,
-        0
+        0.22
       ],
       "isHeader": false,
       "isSubtotal": true
@@ -1252,9 +922,6 @@ window.financeData = {
     {
       "deskripsi": "REAL LABA",
       "values": [
-        0,
-        0,
-        0,
         102912432,
         60774964,
         45668879,
@@ -1264,10 +931,7 @@ window.financeData = {
         0.15,
         0.1,
         0.1,
-        0.1,
-        0,
-        0,
-        0
+        0.1
       ],
       "isHeader": false,
       "isSubtotal": true
